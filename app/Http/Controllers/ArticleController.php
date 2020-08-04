@@ -24,7 +24,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages/articles/create');
     }
 
     /**
@@ -35,7 +35,21 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title'=>'required',
+            'excerpt'=>'required',
+            'body'=>'required'
+        ]);
+
+       $article = new Article();
+
+       $article->title = $request->title;
+       $article->excerpt = $request->excerpt;
+       $article->body = $request->body;
+
+       $article->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -46,7 +60,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        //
+
     }
 
     /**
@@ -55,9 +69,10 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function edit(Article $article)
+    public function edit($id)
     {
-        //
+        $article = Article::find($id);
+        return view('pages/articles/edit',['article'=>$article]);
     }
 
     /**
@@ -67,9 +82,22 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Article $article)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title'=>'required',
+            'excerpt'=>'required',
+            'body'=>'required'
+        ]);
+      $article = Article::find($id);
+
+        $article->title = $request->title;
+        $article->excerpt = $request->excerpt;
+        $article->body = $request->body;
+
+        $article->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -78,8 +106,11 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Article $article)
+    public function destroy($id)
     {
-        //
+        $article = Article::find($id);
+
+        $article->delete();
+        return redirect()->back();
     }
 }

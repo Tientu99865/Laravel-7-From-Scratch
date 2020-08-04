@@ -23,3 +23,10 @@ Route::get('articles','HomepageController@index');
 //POST /articles
 //PUT /articles/id
 //DELETE /articles/id
+
+Route::get('/articles/create','ArticleController@create');
+Route::post('/articles','ArticleController@store');
+Route::get('/articles/{article}','ArticleController@show');
+Route::get('/articles/{id}/edit','ArticleController@edit');
+Route::put('/articles/{id}/update','ArticleController@update');
+Route::get('/articles/{id}/delete','ArticleController@destroy');
